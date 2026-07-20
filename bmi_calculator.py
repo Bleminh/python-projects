@@ -1,10 +1,10 @@
 def bmi_calculator():
-    system = input("Please enter your unit system (Metric/Imperial): ")
-    if (system == 'Metric' or system == 'metric'):
+    system = input("1. Metric/2. Imperial. Please enter your unit system (1, 2): ")
+    if (system == "1"):
         weight = input("Enter your weight in kilogram: ")
         height = input("Enter your height in meter: ")
         bmi = float(weight) / (float(height) ** 2)
-    elif (system == 'Imperial' or system == 'imperial'):
+    elif (system == "2"):
         weight = input("Enter your weight in pounds: ")
         height = input("Enter your height in inches: ")
         bmi = 703 * float(weight) / (float(height) ** 2)
