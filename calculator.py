@@ -1,3 +1,4 @@
+#This is my first calculator built with Python
 def calculator():
     num1 = input("Enter the first number: ")
     num2 = input("Enter the second number: ")
