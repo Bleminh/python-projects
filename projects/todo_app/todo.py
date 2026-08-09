@@ -14,7 +14,7 @@ while True:
     if(user_input == "1"):
         tasks = load_tasks()
         for index, task in enumerate(tasks):
-            print(f"[{index + 1}]{task}\n")
+            print(f"[{index + 1}]{task}")
     elif(user_input == "2"):
         tasks = load_tasks()
         new_task = input("Enter a new task: ")
@@ -24,7 +24,7 @@ while True:
     elif(user_input == "3"):
         tasks = load_tasks()
         for index, task in enumerate(tasks):
-            print(f"[{index + 1}]{task}\n")
+            print(f"[{index + 1}]{task}")
         task_num_str = input("Enter the number of the task to delete: ")
         task_num_int = int(task_num_str) - 1
         tasks.pop(task_num_int)
