@@ -2,9 +2,12 @@ import argparse
 from github_api import get_user_info
 
 def main():
+    # Add parser
     parser = argparse.ArgumentParser(description="Fetch GitHub user info.")
+    # Store what the user typed in username variable
     parser.add_argument("username", help="The GitHub username to search for")
 
+    # Actually read what the user typed and send back the result
     args = parser.parse_args()
 
     print(f"Searching for '{args.username}' ...\n")

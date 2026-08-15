@@ -5,7 +5,7 @@ def load_tasks():
     try:
         with open("tasks.json", "r") as file:
             tasks = json.load(file)
-    except FileNotFoundError:
+    except FileNotFoundError: #if no "tasks.json" yet, create an empty array
         tasks = []
     return tasks
 
@@ -13,14 +13,19 @@ def save_tasks(tasks):
     with open("tasks.json", "w") as file:
         json.dump(tasks, file, indent=4)
 
-# 1. Create the parser
+# Creates the parser
+# Responsible for reading and understanding what the user typed
+# decription appears when the user ask for help
 parser = argparse.ArgumentParser(description="A simple CLI Todo App")
 
-# 2. Add subcommands
+# Add subcommands
+# `dest="command"` -> Whatever the user type -> stores in command variable
 subparsers = parser.add_subparsers(dest="command", help="Available commands")
 
 # Subcommand: add
 add_parser = subparsers.add_parser("add", help="Add a new task")
+# Tell the subparser what to add
+# When someone uses the add command, they must provide a task
 add_parser.add_argument("task", type=str, help="The task description")
 
 # Subcommand: list
