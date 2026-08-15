@@ -1,12 +1,17 @@
-import sys
+import argparse
 import requests
 
-# 1. Check if they typed a city name
-if len(sys.argv) < 2:
-    print("Usage: python weather.py <CityName>")
-    sys.exit()
+# Create the parser
+parser = argparse.ArgumentParser(description="Get the weather for a city")
 
-city_name = sys.argv[1]
+# Tell the parser the user need to provide a city
+parser.add_argument("city", help="Name of the city")
+
+# Read what the user typed
+args = parser.parse_args()
+
+city_name = args.city
+
 geocode_url = f"https://geocoding-api.open-meteo.com/v1/search?name={city_name}&count=1"
 
 # 2. Try to get the coordinates
@@ -26,12 +31,11 @@ try:
 # 3. If the network drops, or the website is down, it jumps here
 except requests.exceptions.RequestException as e:
     print("Error: Could not connect to the geocoding service. Check your Wi-Fi.")
-    sys.exit() # Stop the script so it doesn't try to get the weather with no coordinates
-    
+    quit    
 # 4. If the city doesn't exist, the JSON won't have a "results" key
 except KeyError:
     print(f"Error: Could not find a city named '{city_name}'.")
-    sys.exit()
+    quit
 
 weather_url = f"https://api.open-meteo.com/v1/forecast?latitude={lat}&longitude={lon}&current=temperature_2m,wind_speed_10m"
 
