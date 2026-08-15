@@ -3,6 +3,13 @@ import requests
 import subprocess
 import socket
 
+def clean_host(host):
+    if not host:
+        return ""
+    cleaned = host.replace("http://", "").replace("https://", "")
+    cleaned = cleaned.split('/')[0]
+    return cleaned
+
 def run_ping(host):
     if not host:
         print("Error: You must specify a host to ping!")
@@ -61,38 +68,46 @@ def scan_ports(host):
             else:
                 print(f"  [-] Port {port}: CLOSED / FILTERED")
 
+def run_traceroute(host):
+    if not host:
+        print("Error: You must specify a host to trace")
+        return
+    print(f"Tracing route to {host} (this may take a minute)...")
+    try:
+        subprocess.run(["traceroute", host])
+    except FileNotFoundError:
+        print("Error: 'traceroute command not found on this system")
+
 def main():
-    parser = argparse.ArgumentParser(
-        description="A custom network diagnostic CLI",
-        epilog="Example usage: python network_tool.py ping github.com"
-    )
-
-    parser.add_argument(
-        "action",
-        choices = ["ping", "dns", "ip", "ports"],
-        help="The network action you want to perform"
-    )
-
-    parser.add_argument(
-        "host",
-        nargs="?",
-        default="",
-        help="The target domain or IP (not required for 'ip' action)"
-    )
-
+    parser = argparse.ArgumentParser(description="A custom network diagnostics CLI.")
+    parser.add_argument("action", choices=["ping", "dns", "ip", "ports", "traceroute"])
+    parser.add_argument("host", nargs="?", default="")
     args = parser.parse_args()
 
-    if args.action == "ping":
-        run_ping(args.host)
+    target_host = clean_host(args.host)
 
-    elif args.action == "dns":
-        run_dns(args.host)
+    try:
+        if args.action == "ping":
+            run_ping(target_host)
+            
+        elif args.action == "dns":
+            run_dns(target_host)
+            
+        elif args.action == "ip":
+            get_public_ip()
+            
+        elif args.action == "ports":
+            scan_ports(target_host)
+            
+        elif args.action == "traceroute":
+            run_traceroute(target_host)
 
-    elif args.action == "ip":
-        get_public_ip()
-
-    elif args.action == "ports":
-        scan_ports(args.host)
+    except KeyboardInterrupt:
+        # This catches Ctrl+C
+        print("\n Scan cancelled by user. Exiting gracefully.")
+    except Exception as e:
+        # This catches any other weird Python crashes
+        print(f"\n An unexpected error occurred: {e}")
         
 if __name__ == "__main__":
     main()    

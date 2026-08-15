@@ -7,6 +7,7 @@ A Python-based command-line interface for network troubleshooting and diagnostic
 * **DNS**: Perform domain name resolution (via `dig`).
 * **IP**: Fetch the network's public IPv4 address.
 * **Port Scanner**: Verify standard web and SSH ports (22, 80, 443) using TCP socket connections.
+* * **Traceroute**: Map the network path to a target host at Layer 3.
 
 ## Prerequisites
 * Python 3.x
@@ -31,3 +32,6 @@ python network_tool.py dns openai.com
 
 # Scan common ports
 python network_tool.py ports hust.edu.vn
+
+# Trace the network path
+python network_tool.py traceroute google.com
