@@ -2,12 +2,15 @@
 
 A Python-based command-line interface for network troubleshooting and diagnostics. Built using `argparse`, `subprocess`, and raw TCP sockets.
 
+## Demonstration
+![Network CLI Demo](./network_demo.png)
+
 ## Features
 * **Ping**: Check host reachability using ICMP.
 * **DNS**: Perform domain name resolution (via `dig`).
 * **IP**: Fetch the network's public IPv4 address.
 * **Port Scanner**: Verify standard web and SSH ports (22, 80, 443) using TCP socket connections.
-* * **Traceroute**: Map the network path to a target host at Layer 3.
+* **Traceroute**: Map the network path to a target host at Layer 3.
 
 ## Prerequisites
 * Python 3.x
